@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+
 type Rating = "up" | "down";
 
 const categories = [
@@ -81,15 +82,22 @@ export default function JokeFetcher() {
   };
 
   return (
-    <div className="relative w-full min-h-screen md:grid md:grid-cols-12 transition-colors overflow-x-hidden">
+    <div
+      className="
+        relative w-full min-h-screen md:grid md:grid-cols-12 
+        transition-colors overflow-x-hidden 
+        bg-white dark:bg-gray-900 text-gray-900 dark:text-white
+      "
+    >
       <button
-        className="md:hidden absolute left-4 top-4 text-gray-700 z-30"
+        className="md:hidden absolute left-4 top-4 text-gray-700 dark:text-gray-200 z-30"
         onClick={() => {
           setIsSidebarOpen(true);
         }}
       >
         <Menu size={26} />
       </button>
+
       <div className="md:col-span-4">
         <Sidebar
           history={history}
@@ -104,8 +112,9 @@ export default function JokeFetcher() {
           alt="background"
           fill
           priority
-          className="absolute inset-0 object-cover -z-10 opacity-30"
+          className="absolute inset-0 object-cover -z-10 opacity-30 dark:opacity-20"
         />
+
         <h1 className="text-4xl sm:text-5xl md:text-7xl mx-auto font-bold mb-6 text-yellow-500">
           Risus
         </h1>
@@ -139,13 +148,10 @@ export default function JokeFetcher() {
             onChange={(e) => setUserInput(e.target.value)}
             placeholder="Customize your Joke"
             className="
-              flex-1
-              p-3 sm:p-4
-              text-base sm:text-lg
-              rounded-full 
-              border border-gray-300 dark:border-gray-700 
-              bg-white dark:bg-gray-800 
-              placeholder-gray-500 dark:placeholder-gray-400 
+              flex-1 p-3 sm:p-4 text-base sm:text-lg rounded-full
+              border border-gray-300 dark:border-gray-700
+              bg-white dark:bg-gray-800
+              placeholder-gray-500 dark:placeholder-gray-400
               focus:outline-none focus:ring-2 focus:ring-indigo-500
             "
           />
@@ -154,12 +160,8 @@ export default function JokeFetcher() {
             onClick={generateJoke}
             disabled={loadingJoke || (!userInput && !selectedCategory)}
             className="
-              bg-indigo-600 hover:bg-indigo-700
-              text-white
-              p-3 sm:p-4
-              rounded-full
-              flex items-center justify-center
-              transition
+              bg-indigo-600 hover:bg-indigo-700 text-white
+              p-3 sm:p-4 rounded-full flex items-center justify-center transition
             "
           >
             {loadingJoke ? (
@@ -167,7 +169,11 @@ export default function JokeFetcher() {
                 className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                 initial={{ rotate: 0 }}
                 animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 0.6, ease: "linear" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 0.6,
+                  ease: "linear",
+                }}
               />
             ) : (
               <ArrowUp className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -176,26 +182,30 @@ export default function JokeFetcher() {
         </div>
 
         {/* Joke */}
-        <div className="min-h-16 mb-4 text-center text-base sm:text-lg md:text-xl text-gray-900 dark:text-gray-100">
+        <div className="min-h-16 mb-4 text-center text-base sm:text-lg md:text-xl">
           {loadingJoke ? (
             "Thinking..."
           ) : joke ? (
-            <div className="max-w-xl rounded backdrop-blur-lg p-8 shadow text-base sm:text-2xl md:text-3xl">
+            <div className="max-w-xl rounded backdrop-blur-lg p-8 shadow text-base sm:text-2xl md:text-3xl bg-white/60 dark:bg-gray-800/60">
               {`"${joke}"`}
             </div>
           ) : (
-            <p className="text-indigo-700">Your joke will appear here.</p>
+            <p className="text-indigo-700 dark:text-indigo-400">
+              Your joke will appear here.
+            </p>
           )}
         </div>
 
         {/* Feedback */}
         {joke && (
           <div className="flex justify-between items-center gap-3">
-            <p className="text-yellow-700 text-xl">Rate the Joke :</p>
-            <div className="flex gap-3 justify-between items-center rounded-full px-5 py-3 shadow-lg bg-white">
+            <p className="text-yellow-700 dark:text-yellow-500 text-xl">
+              Rate the Joke :
+            </p>
+            <div className="flex gap-3 justify-between items-center rounded-full px-5 py-3 shadow-lg bg-white dark:bg-gray-800">
               <button
                 onClick={() => sendFeedback("up")}
-                className={`text-2xl sm:text-3xl transition border-gray-700 ${
+                className={`text-2xl sm:text-3xl transition ${
                   rating === "up"
                     ? "text-green-500"
                     : "text-gray-500 dark:text-gray-400"

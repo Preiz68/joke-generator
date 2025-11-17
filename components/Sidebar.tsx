@@ -30,105 +30,98 @@ export default function Sidebar({
 
   return (
     <>
-      {/* DARK SCREEN OVERLAY FOR MOBILE */}
+      {/* DARK OVERLAY BACKDROP (MOBILE) */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 w-full bg-black/40 backdrop-blur-sm z-20 md:hidden"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-20 md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      {/* SLIDE-IN SIDEBAR */}
+      {/* SIDEBAR PANEL */}
       <motion.div
         initial={{ x: "-100%" }}
         animate={{ x: isSidebarOpen ? "0%" : "-100%" }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.35 }}
         className="
-          fixed md:relative
-          z-30 w-[80%] md:w-full
-          top-0 left-0
-          h-full overflow-x-hidden flex-col items-center
-          bg-gray-100
-          p-6 overflow-y-auto shadow-lg
-          border-r border-gray-300"
+          fixed md:relative z-30
+          w-[80%] md:w-full
+          top-0 left-0 h-full
+          bg-gray-100 dark:bg-gray-900
+          text-gray-800 dark:text-gray-200
+          border-r border-gray-300 dark:border-gray-700
+          shadow-xl md:shadow-none
+          overflow-y-auto p-6
+        "
       >
-        {/* CLOSE BUTTON ON MOBILE */}
+        {/* CLOSE BUTTON - MOBILE ONLY */}
         <button
-          className="md:hidden absolute top-2 right-2 text-gray-700"
+          className="md:hidden absolute right-3 top-3 text-gray-700 dark:text-gray-300"
           onClick={() => setIsSidebarOpen(false)}
         >
           <X size={26} />
         </button>
 
-        {/* SEARCH */}
-        <div className="relative mb-8 mt-3">
+        {/* SEARCH BAR */}
+        <div className="relative mb-10 mt-4">
           <Search
-            size={22}
-            className="absolute top-4 left-4 text-gray-600 dark:text-gray-300"
+            size={20}
+            className="absolute top-4 left-4 text-gray-600 dark:text-gray-400"
           />
+
           <input
             placeholder="Search Joke Chats"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="
               w-full py-4 pl-12 pr-4 rounded-full
-              border border-blue-400 bg-white dark:bg-gray-800
+              bg-white dark:bg-gray-800
               text-gray-900 dark:text-gray-100
               placeholder:text-gray-500 dark:placeholder:text-gray-400
-              shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500
+              border border-blue-400 dark:border-blue-600
+              shadow-md
+              focus:outline-none focus:ring-2 focus:ring-blue-500
             "
           />
         </div>
 
-        {/* NEW JOKE BUTTON */}
-        {/* <p
-          className="
-          text-xl cursor-pointer mb-10 px-4 py-2 rounded-full
-          transition-all duration-150 bg-white dark:bg-gray-800
-          hover:bg-blue-300 hover:text-black
-          shadow-sm border border-gray-300 dark:border-gray-700
-        "
-        >
-          🤡 New Joke
-        </p> */}
-
-        {/* CATEGORY GRID */}
-        <div className="mb-10">
-          <h3 className="text-lg font-bold text-gray-700 dark:text-gray-200 mb-3">
+        {/* CATEGORY SECTION */}
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-3">
             Categories
           </h3>
 
-          <div className="md:grid md:grid-cols-2 flex flex-col gap-3 p-4">
+          <div className="md:grid md:grid-cols-2 flex flex-col gap-3 p-2">
             {categories.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.name;
 
               return (
-                <div
+                <button
                   key={cat.name}
                   onClick={() => handleCategoryClick(cat.name)}
                   className={`
-                    cursor-pointer md:px-3 md:py-4 md:rounded-xl p-2 rounded-full border
+                    cursor-pointer w-full
+                    md:px-4 md:py-4 md:rounded-xl
+                    px-3 py-3 rounded-full
                     flex md:flex-col items-center justify-center gap-2
-                    transition-all duration-200 shadow-md
+                    border transition-all duration-200 shadow-md
                     ${
                       isActive
-                        ? "bg-blue-600 text-white border-blue-700 scale-105 shadow-lg"
+                        ? "bg-blue-600 text-white border-blue-700 shadow-lg scale-[1.03]"
                         : "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-700 hover:bg-blue-100 dark:hover:bg-gray-700"
                     }
                   `}
                 >
-                  <Icon size={22} />
-                  <span className="text-sm font-medium text-center">
-                    {cat.name}
-                  </span>
-                </div>
+                  <Icon size={20} />
+                  <span className="text-sm font-medium">{cat.name}</span>
+                </button>
               );
             })}
           </div>
         </div>
 
-        {/* HISTORY SECTION */}
+        {/* HISTORY */}
         <HistoryPanel history={history} />
       </motion.div>
     </>
