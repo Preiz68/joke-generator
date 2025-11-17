@@ -33,7 +33,7 @@ export default function Sidebar({
       {/* DARK SCREEN OVERLAY FOR MOBILE */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-20 md:hidden"
+          className="fixed inset-0 w-full bg-black/40 backdrop-blur-sm z-20 md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
@@ -45,34 +45,33 @@ export default function Sidebar({
         transition={{ duration: 0.4 }}
         className="
           fixed md:relative
-          z-30
+          z-30 w-[80%] md:w-full
           top-0 left-0
-          h-full w-full
-          bg-gray-100 dark:bg-gray-900
+          h-full overflow-x-hidden flex-col items-center
+          bg-gray-100
           p-6 overflow-y-auto shadow-lg
-          border-r border-gray-300 dark:border-gray-700
-        "
+          border-r border-gray-300"
       >
         {/* CLOSE BUTTON ON MOBILE */}
         <button
-          className="md:hidden absolute top-4 right-4 text-gray-700 dark:text-gray-200"
+          className="md:hidden absolute top-2 right-2 text-gray-700"
           onClick={() => setIsSidebarOpen(false)}
         >
           <X size={26} />
         </button>
 
         {/* SEARCH */}
-        <div className="relative mb-8">
+        <div className="relative mb-8 mt-3">
           <Search
             size={22}
-            className="absolute top-3 left-4 text-gray-600 dark:text-gray-300"
+            className="absolute top-4 left-4 text-gray-600 dark:text-gray-300"
           />
           <input
             placeholder="Search Joke Chats"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="
-              w-full py-3 pl-12 pr-4 rounded-full
+              w-full py-4 pl-12 pr-4 rounded-full
               border border-blue-400 bg-white dark:bg-gray-800
               text-gray-900 dark:text-gray-100
               placeholder:text-gray-500 dark:placeholder:text-gray-400
@@ -82,7 +81,7 @@ export default function Sidebar({
         </div>
 
         {/* NEW JOKE BUTTON */}
-        <p
+        {/* <p
           className="
           text-xl cursor-pointer mb-10 px-4 py-2 rounded-full
           transition-all duration-150 bg-white dark:bg-gray-800
@@ -91,7 +90,7 @@ export default function Sidebar({
         "
         >
           🤡 New Joke
-        </p>
+        </p> */}
 
         {/* CATEGORY GRID */}
         <div className="mb-10">
@@ -99,7 +98,7 @@ export default function Sidebar({
             Categories
           </h3>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="md:grid md:grid-cols-2 flex flex-col gap-3 p-4">
             {categories.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeCategory === cat.name;
@@ -109,8 +108,8 @@ export default function Sidebar({
                   key={cat.name}
                   onClick={() => handleCategoryClick(cat.name)}
                   className={`
-                    cursor-pointer px-3 py-4 rounded-xl border
-                    flex flex-col items-center justify-center gap-2
+                    cursor-pointer md:px-3 md:py-4 md:rounded-xl p-2 rounded-full border
+                    flex md:flex-col items-center justify-center gap-2
                     transition-all duration-200 shadow-md
                     ${
                       isActive
